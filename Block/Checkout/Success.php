@@ -1,5 +1,5 @@
 <?php
-namespace Airslamit\Thankyou\Block\Checkout;
+namespace Airslamit\ThankYou\Block\Checkout;
 
 class Success extends \Magento\Checkout\Block\Onepage\Success
 {
