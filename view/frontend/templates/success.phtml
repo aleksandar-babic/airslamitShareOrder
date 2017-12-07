@@ -1,0 +1,163 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Magento\Checkout\Block\Onepage\Success */ ?>
+
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+
+<div class="checkout-success">
+    <?php if ($block->getOrderId()):?>
+        <?php if ($block->getCanViewOrder()) :?>
+            <p><?php echo __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+        <?php  else :?>
+            <p><?php echo __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
+        <?php endif;?>
+            <p><?php /* @escapeNotVerified */ echo __('We\'ll email you an order confirmation with details and tracking info.') ?></p>
+    <?php endif;?>
+
+    <?php echo $block->getAdditionalInfoHtml() ?>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary continue" href="<?php /* @escapeNotVerified */ echo $block->getUrl() ?>"><span><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span></a>
+        </div>
+        <?php if($block->getOrder()->getTotalItemCount() == 1) : 
+          $productUrl = $objectManager
+                          ->create('Magento\Catalog\Model\Product')
+                          ->load($block->getOrder()->getAllItems()[0]->getProductId())->getProductUrl();
+          $productName = $objectManager
+                          ->create('Magento\Catalog\Model\Product')
+                          ->load($block->getOrder()->getAllItems()[0]->getProductId())->getName();
+          $shareUrlFb = "http://www.facebook.com/sharer/sharer.php?s=100&p[url]=" .$productUrl."&p[title]=".$productName;
+          $shareUrlTwitter = "https://twitter.com/home?status=I\'ve just bought "
+                              .$productName
+                              ." from Airslamit Store. "
+                              .$productUrl;
+        ?>
+        <div class="primary share">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+            <div class='container'>
+
+              <h1>Share your Airslamit order</h1>
+
+              <div class="facebook">
+                <a onclick="openFbPopUp()"><i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+              </a>
+              </div>
+
+              <div class="twitter">
+                <a onclick="openTwitterPopUp()"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- <div class="instagram">
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+                </a>
+              </div> -->
+            </div>
+        </div>
+        <script type="text/javascript">
+          function openFbPopUp() {
+            window.open(
+              '<?php echo $shareUrlFb; ?>',
+              'facebook-share-dialog', 
+              'width=626,height=436'); 
+            return  false;
+          }
+          function openTwitterPopUp() {
+            window.open(
+              '<?php echo $shareUrlTwitter; ?>',
+              'facebook-share-dialog', 
+              'width=626,height=436'); 
+            return  false;
+          }
+        </script>
+      <?php else : ?>
+        <div class="primary share">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+            <div class='container'>
+
+              <h1>Share your Airslamit order</h1>
+
+              <div class="facebook">
+                <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+              </a>
+              </div>
+
+              <div class="twitter">
+                <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+              </div>
+            </div>
+        </div>
+      <?php endif; ?>
+    </div>
+</div>
+
+<style>
+    .container h1{
+ color:black;
+ text-align:center;
+ padding:5px;
+ margin:0;
+ font-size:15px;
+ font-family: 'Roboto', sans-serif;
+}
+
+.share {
+    border: 2px solid #ec3237;
+    border-radius: 5px;
+    clear: both;
+    margin-top: 12px;
+}
+
+
+.facebook,
+.twitter,
+.instagram{
+  display: inline-block;
+  margin: 10px;
+  transition: 1s;
+  border-radius:5px;
+}
+
+.fa-facebook,
+.fa-twitter,
+.fa-instagram{
+  padding: 10px;
+  width: 80px;
+  text-align: center;
+  color: white;
+}
+
+.facebook:hover,
+.twitter:hover,
+.instagram:hover{
+  transform: scale(1.1, 1.1);
+  transform: rotate(360deg);
+}
+
+
+/*Colors*/
+
+.facebook {
+  background-color: #3b5998;
+}
+
+.twitter {
+  background-color: #5EA9DD;
+}
+
+.instagram {
+  background: linear-gradient(60deg, #F9C556, #F97621, #EA484C, #D72F78, #A93AB5, #5B62D1);
+}
+
+</style>
+
+
