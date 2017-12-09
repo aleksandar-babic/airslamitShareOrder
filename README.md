@@ -4,7 +4,7 @@
 ```bash
     mkdir -p <Your Magento2 Installation directory>/app/code/Airslamit/ThankYou && cd $_
     git clone https://github.com/aleksandar-babic/airslamitShareOrder.git .
-    php <Your Magento2 Installation directory>/bin/magento module:enable Airslamit_Thankyou
+    php <Your Magento2 Installation directory>/bin/magento module:enable Airslamit_ThankYou
     php <Your Magento2 Installation directory>/bin/magento setup:upgrade
     php <Your Magento2 Installation directory>/bin/magento setup:static-content:deploy
     php <Your Magento2 Installation directory>/bin/magento cache:flush
